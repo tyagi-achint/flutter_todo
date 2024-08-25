@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
+import 'screens/tasks_screen.dart';
+import 'services/add_button.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Hello'),
+      theme: ThemeData(scaffoldBackgroundColor: Colors.blue),
+      home: SafeArea(
+        child: Scaffold(
+          body: Tasks(),
+          floatingActionButton: addButton(),
         ),
-        body: Text('Hello'),
       ),
     );
   }
