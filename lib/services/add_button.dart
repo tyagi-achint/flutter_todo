@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 
-_pressed() {
-  return print("Hello");
+class AddButton extends StatefulWidget {
+  @override
+  _AddButtonState createState() => _AddButtonState();
 }
 
-addButton() {
-  return FloatingActionButton(
-    backgroundColor: Colors.blue,
-    onPressed: _pressed,
-    tooltip: 'Add Task',
-    shape: CircleBorder(),
-    child: Icon(
-      Icons.add,
-      color: Colors.white,
-      size: 20,
-    ),
-  );
+class _AddButtonState extends State<AddButton> {
+  _pressed() {
+    // addTaskToList('Achint');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: Colors.lightBlueAccent,
+      onPressed: _pressed,
+      tooltip: 'Add Task',
+      shape: CircleBorder(),
+      child: Icon(
+        Icons.add,
+        color: Colors.white,
+        size: 20,
+      ),
+    );
+  }
 }

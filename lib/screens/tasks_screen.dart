@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class Tasks extends StatefulWidget {
   @override
@@ -26,7 +25,7 @@ class _Tasks extends State<Tasks> {
                 padding: EdgeInsets.all(10),
                 child: Icon(
                   Icons.list,
-                  color: Colors.blue,
+                  color: Colors.lightBlueAccent,
                   size: 30,
                 ),
               ),
