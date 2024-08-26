@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/services/tasks_list.dart';
+import '../services/tasks_list.dart';
+import '../Utilities/tasks.dart';
 
 class Tasks extends StatefulWidget {
   @override
@@ -41,7 +42,7 @@ class _Tasks extends State<Tasks> {
                     color: Colors.white),
               ),
               Text(
-                '12 Tasks',
+                '${tasksList.length} Tasks',
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
@@ -62,7 +63,7 @@ class _Tasks extends State<Tasks> {
               ),
               color: Colors.white,
             ),
-            child: TasksList(),
+            child: TasksList(tasks: tasksList),
           ),
         )
       ],

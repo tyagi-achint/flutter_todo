@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../Utilities/tasksList.dart';
-
 class TasksList extends StatefulWidget {
+  final List tasks;
+  TasksList({required this.tasks});
   @override
   _TasksListState createState() => _TasksListState();
 }
@@ -10,24 +10,30 @@ class TasksList extends StatefulWidget {
 class _TasksListState extends State<TasksList> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: tasksList.map(
-        (task) {
-          return ListTile(
-            title: Text(task.title),
-            trailing: Checkbox(
-              activeColor: Colors.lightBlueAccent,
-              checkColor: Colors.white,
-              value: task.isChecked,
-              onChanged: (bool? value) {
-                setState(() {
-                  task.isChecked = value ?? false;
-                });
-              },
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text(
+            widget.tasks[index].title,
+            style: TextStyle(
+              decoration: widget.tasks[index].isChecked
+                  ? TextDecoration.lineThrough
+                  : TextDecoration.none,
             ),
-          );
-        },
-      ).toList(),
+          ),
+          trailing: Checkbox(
+            activeColor: Colors.lightBlueAccent,
+            checkColor: Colors.white,
+            value: widget.tasks[index].isChecked,
+            onChanged: (bool? value) {
+              setState(() {
+                widget.tasks[index].isChecked = value ?? false;
+              });
+            },
+          ),
+        );
+      },
+      itemCount: widget.tasks.length,
     );
   }
 }

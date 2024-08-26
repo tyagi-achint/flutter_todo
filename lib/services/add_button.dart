@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../Utilities/tasksList.dart';
-import 'add_tasks.dart';
 
 class AddButton extends StatefulWidget {
+  final Function(String) onAddTask;
+
+  AddButton({required this.onAddTask});
   @override
   _AddButtonState createState() => _AddButtonState();
 }
@@ -10,16 +11,9 @@ class AddButton extends StatefulWidget {
 class _AddButtonState extends State<AddButton> {
   final TextEditingController _titleController = TextEditingController();
 
-  void addTask(String title) {
-    if (title.isNotEmpty) {
-      setState(() {
-        tasksList.add(AddTask(title: title));
-      });
-    }
-  }
-
   void _pressed() {
-    showModalBottomSheet(context: context, builder: buildBottomSheet);
+    showModalBottomSheet(
+        context: context, isScrollControlled: true, builder: buildBottomSheet);
   }
 
   @override
@@ -38,15 +32,20 @@ class _AddButtonState extends State<AddButton> {
   }
 
   Widget buildBottomSheet(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(30),
-      width: double.infinity - 50,
-      child: Center(
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            top: 20,
+            right: 30,
+            left: 30),
+        width: double.infinity - 50,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
               "Add Task",
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 30,
                   color: Colors.blue,
@@ -54,6 +53,7 @@ class _AddButtonState extends State<AddButton> {
             ),
             SizedBox(height: 10),
             TextField(
+              autofocus: true,
               controller: _titleController,
               style: TextStyle(
                   fontSize: 20,
@@ -67,10 +67,13 @@ class _AddButtonState extends State<AddButton> {
                     WidgetStateProperty.all<Color>(Colors.lightBlueAccent),
               ),
               onPressed: () {
-                addTask(_titleController.text);
-                _titleController.clear();
-
+                if (_titleController.text.isNotEmpty) {
+                  setState(() {
+                    widget.onAddTask(_titleController.text);
+                  });
+                }
                 Navigator.pop(context);
+                _titleController.clear();
               },
               child: Text(
                 "Add",
@@ -79,7 +82,8 @@ class _AddButtonState extends State<AddButton> {
                     fontWeight: FontWeight.w800,
                     fontSize: 15),
               ),
-            )
+            ),
+            SizedBox(height: 30),
           ],
         ),
       ),
