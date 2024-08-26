@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import '../Utilities/tasks.dart';
 
 class TasksList extends StatefulWidget {
-  final List tasks;
-  TasksList({required this.tasks});
+  final Function(int) onDeleteTask;
+
+  TasksList({required this.onDeleteTask});
   @override
   _TasksListState createState() => _TasksListState();
 }
@@ -14,26 +16,38 @@ class _TasksListState extends State<TasksList> {
       itemBuilder: (context, index) {
         return ListTile(
           title: Text(
-            widget.tasks[index].title,
+            tasks[index].title,
             style: TextStyle(
-              decoration: widget.tasks[index].isChecked
+              decoration: tasks[index].isChecked
                   ? TextDecoration.lineThrough
                   : TextDecoration.none,
             ),
           ),
-          trailing: Checkbox(
-            activeColor: Colors.lightBlueAccent,
-            checkColor: Colors.white,
-            value: widget.tasks[index].isChecked,
-            onChanged: (bool? value) {
-              setState(() {
-                widget.tasks[index].isChecked = value ?? false;
-              });
-            },
+          trailing: SizedBox(
+            width: 100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Checkbox(
+                  activeColor: Colors.lightBlueAccent,
+                  checkColor: Colors.white,
+                  value: tasks[index].isChecked,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      tasks[index].isChecked = value ?? false;
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () => widget.onDeleteTask(index),
+                ),
+              ],
+            ),
           ),
         );
       },
-      itemCount: widget.tasks.length,
+      itemCount: tasks.length,
     );
   }
 }

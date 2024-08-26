@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../services/tasks_list.dart';
 import '../Utilities/tasks.dart';
+import '../services/tasks_list.dart';
 
 class Tasks extends StatefulWidget {
   @override
@@ -42,7 +42,7 @@ class _Tasks extends State<Tasks> {
                     color: Colors.white),
               ),
               Text(
-                '${tasksList.length} Tasks',
+                '$tasksCount Tasks',
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
@@ -63,10 +63,19 @@ class _Tasks extends State<Tasks> {
               ),
               color: Colors.white,
             ),
-            child: TasksList(tasks: tasksList),
+            child: TasksList(
+              onDeleteTask: _deleteTask,
+            ),
           ),
         )
       ],
     );
+  }
+
+  void _deleteTask(int index) {
+    setState(() {
+      tasks.removeAt(index);
+      tasksCount = tasks.length;
+    });
   }
 }

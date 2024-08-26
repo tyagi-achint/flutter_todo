@@ -27,7 +27,8 @@ class _MyAppState extends State<MyApp> {
 
   void _addTask(String title) {
     setState(() {
-      tasksList.add(AddTask(title: title));
+      tasks.add(AddTask(title: title));
+      tasksCount = tasks.length;
     });
   }
 }
